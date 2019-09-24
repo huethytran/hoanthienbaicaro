@@ -1,0 +1,127 @@
+body {
+    font: 14px "Century Gothic", Futura, sans-serif;
+    margin: 20px;
+  }
+  
+  ol, ul {
+    padding-left: 30px;
+  }
+  
+  .board-row:after {
+    clear: both;
+    content: "";
+    display: table;
+  }
+  
+  .status {
+    margin-bottom: 10px;
+  }
+  
+  .square {
+    background: #fff;
+    border: 1px solid #999;
+    float: left;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 34px;
+    height: 34px;
+    margin-right: -1px;
+    margin-top: -1px;
+    padding: 0;
+    text-align: center;
+    width: 34px;
+  }
+  .square.x {
+    color: red;
+  }
+  .square.isChosen{
+    background-color: yellow;
+  }
+  .square.isWin{
+    background-color: #61dafb;
+  }
+  .square.o {
+    color: green;
+  }
+  .square:focus {
+    outline: none;
+  }
+  
+  .kbd-navigation .square:focus {
+    background: #ddd;
+  }
+  .game-info .title {
+    font-size: 27px;
+    font-weight: bold;
+    color: #61dafb;
+  }
+  .game {
+    display: flex;
+    flex-direction: row;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    width: 680px;
+    height:680px;
+  }
+  .app{
+    display: flex;
+    background: #282c34;
+  }
+  .game-info {
+    display: block;
+    color: white;
+    font-size: 24px;
+    margin-top: 2%;
+    width: 20%;
+    margin-left: 2%;
+  }
+  .divhistory{
+    margin-top: 3%;
+    margin-left: 3%;
+    width: 20%;
+  }
+  .divhistory p {
+    color: #fff; font-size: 25px; font-weight: bold;
+    border-left: 10px solid yellow;
+  }
+  .divhistory1{
+    display: flex;
+    width: 100%;
+  }
+  .his{
+    width: 100%;
+    color: #fff;
+    border: none;
+    background-color: #282c34;
+  }
+  .his:hover {
+    cursor: pointer;
+    color: #61dafb;
+  }
+  .hisIsChosen{
+    width: 100%;
+    color: #282c34;
+    font-weight: bold;
+    background-color: yellow;
+    border: none;
+  }
+  .hisIsChosen:hover{
+    cursor: pointer;
+  }
+  
+  .history{
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 500px;
+    border: 2px double #fff;
+    border-radius: 10px;
+  }
+.btnSort{
+  display: inline-block;
+  margin:0px auto;
+  color: #282c34 !important;
+  font-weight: bold !important;
+  background-color: yellow !important;
+  border-color: yellow !important;
+}
