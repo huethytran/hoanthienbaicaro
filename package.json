@@ -16,6 +16,11 @@
     "eject": "react-scripts eject",
     "precommit": "cross-env NODE_ENV=production lint-staged"
   },
+  "husky": {
+    "hooks": {
+      "precommit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "*.{js,jsx}": [
       "pretty-quick --staged",
