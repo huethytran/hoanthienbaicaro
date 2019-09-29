@@ -146,49 +146,45 @@ class Game extends React.Component {
   }
 
   handleClick(i, winner) {
-    const { squares } = this.state;
-    const { xIsNext } = this.state;
-    const { history } = this.state;
-    let { numOfStep } = this.state;
-    const { backStep } = this.state;
-    numOfStep -= Math.abs(backStep);
-    history.splice(numOfStep, Math.abs(backStep));
+    this.state.numOfStep -= Math.abs(this.state.backStep);
+    this.state.history.splice(
+      this.state.numOfStep,
+      Math.abs(this.state.backStep)
+    );
     this.setState({ backStep: 0 });
-    if (squares[i] === null && winner === null) {
-      squares[i] = xIsNext ? 'X' : 'O';
-      xIsNext
+    if (this.state.squares[i] === null && winner === null) {
+      this.state.squares[i] = this.state.xIsNext ? 'X' : 'O';
+      this.state.xIsNext
         ? this.setState({ xIsNext: false })
         : this.setState({ xIsNext: true });
       this.setState({ preStep: i });
-      history[numOfStep] = {
-        player: xIsNext ? 'X' : 'O',
+      this.state.history[this.state.numOfStep] = {
+        player: this.state.xIsNext ? 'X' : 'O',
         step: i
       };
-      numOfStep += 1;
+      this.state.numOfStep += 1;
     }
   }
 
   handleSortButtonClick() {
-    const { isAsc } = this.state;
-    if (isAsc === true) this.setState({ isAsc: false });
+    if (this.state.isAsc === true) this.setState({ isAsc: false });
     else this.setState({ isAsc: true });
   }
 
   handleHistoryClick(i) {
-    const { history } = this.state;
-    const { squares } = this.state;
-    let { backStep } = this.state;
-    if (i < history.length - 1 + backStep) {
-      backStep = -history.length + i + 1;
-      for (let j = history.length - 1; j > i; j--)
-        squares[history[j].step] = null;
+    if (i < this.state.history.length - 1 + this.state.backStep) {
+      this.state.backStep = -this.state.history.length + i + 1;
+      for (let j = this.state.history.length - 1; j > i; j--)
+        this.state.squares[this.state.history[j].step] = null;
     }
-    if (i > history.length - 1 + backStep) {
-      for (let j = history.length + backStep; j <= i; j++)
-        squares[history[j].step] = history[j].player;
-      backStep = -history.length + i + 1;
+    if (i > this.state.history.length - 1 + this.state.backStep) {
+      for (let j = this.state.history.length + this.state.backStep; j <= i; j++)
+        this.state.squares[this.state.history[j].step] = this.state.history[
+          j
+        ].player;
+      this.state.backStep = -this.state.history.length + i + 1;
     }
-    if (history[i].player === 'X') this.setState({ xIsNext: false });
+    if (this.state.history[i].player === 'X') this.setState({ xIsNext: false });
     else this.setState({ xIsNext: true });
   }
 
@@ -204,18 +200,12 @@ class Game extends React.Component {
   }
 
   render() {
-    const { squares } = this.state;
-    const { xIsNext } = this.state;
-    const { history } = this.state;
-    const { backStep } = this.state;
-    const { preStep } = this.state;
-    const { isAsc } = this.state;
-    const squrs = squares.slice();
-    const winner = calculateWinner(squrs, preStep);
+    const squares = this.state.squares.slice();
+    const winner = calculateWinner(squares, this.state.preStep);
     let status;
     if (winner.kq) status = `Winner is: ${winner.kq}`;
     // Nếu winner có giá trị thì sẽ hiển thị người thắng cuộc
-    else status = `Next player is: ${xIsNext ? 'X' : 'O'}`;
+    else status = `Next player is: ${this.state.xIsNext ? 'X' : 'O'}`;
     return (
       <div className="app">
         <div className="game-info">
@@ -232,13 +222,13 @@ class Game extends React.Component {
         </div>
         <div className="game">
           <Board
-            preStep={preStep}
-            squares={squrs}
-            history={history}
-            backStep={backStep}
+            preStep={this.state.preStep}
+            squares={this.state.squares}
+            history={this.state.history}
+            backStep={this.state.backStep}
             winner={winner}
             onClick={i => this.handleClick(i, winner.kq)}
-            xIsNext={xIsNext}
+            xIsNext={this.state.xIsNext}
           />
         </div>
         <div className="divhistory">
@@ -255,9 +245,9 @@ class Game extends React.Component {
           </div>
           <div className="history">
             <History
-              history={history}
-              backStep={backStep}
-              isAsc={isAsc}
+              history={this.state.history}
+              backStep={this.state.backStep}
+              isAsc={this.state.isAsc}
               onClick={i => this.handleHistoryClick(i)}
             />
           </div>

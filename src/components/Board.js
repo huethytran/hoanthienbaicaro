@@ -3,67 +3,74 @@ import Square from './Square';
 
 class Board extends React.Component {
   renderSquare(i) {
-    const { winner } = this.props;
-    const { preStep } = this.props;
-    const { squares } = this.props;
-    const { history } = this.props;
-    const { backStep } = this.props;
-    const { onClick } = this.props;
-    if (winner.kq != null) {
+    if (this.props.winner.kq != null) {
       if (
-        preStep + winner.vt * winner.type === i ||
-        preStep + (winner.vt + 1) * winner.type === i ||
-        preStep + (winner.vt + 2) * winner.type === i ||
-        preStep + (winner.vt + 3) * winner.type === i ||
-        preStep + (winner.vt + 4) * winner.type === i
+        this.props.preStep + this.props.winner.vt * this.props.winner.type ===
+          i ||
+        this.props.preStep +
+          (this.props.winner.vt + 1) * this.props.winner.type ===
+          i ||
+        this.props.preStep +
+          (this.props.winner.vt + 2) * this.props.winner.type ===
+          i ||
+        this.props.preStep +
+          (this.props.winner.vt + 3) * this.props.winner.type ===
+          i ||
+        this.props.preStep +
+          (this.props.winner.vt + 4) * this.props.winner.type ===
+          i
       )
         return (
           <Square
-            value={squares[i]}
+            value={this.props.squares[i]}
             isChosen={false}
             isWin
-            onClick={() => onClick(i)}
+            onClick={() => this.props.onClick(i)}
           />
         );
       return (
         <Square
-          value={squares[i]}
+          value={this.props.squares[i]}
           isChosen={false}
           isWin={false}
-          onClick={() => onClick(i)}
+          onClick={() => this.props.onClick(i)}
         />
       );
     }
-    if (history[history.length - 1 + backStep].step === i)
+    if (
+      this.props.history[this.props.history.length - 1 + this.props.backStep]
+        .step === i
+    )
       return (
         <Square
-          value={squares[i]}
+          value={this.props.squares[i]}
           isChosen
           isWin={false}
-          onClick={() => onClick(i)}
+          onClick={() => this.props.onClick(i)}
         />
       );
     return (
       <Square
-        value={squares[i]}
+        value={this.props.squares[i]}
         isChosen={false}
         isWin={false}
-        onClick={() => onClick(i)}
+        onClick={() => this.props.onClick(i)}
       />
     );
   }
 
   renderAllSquares() {
-    const { squares } = this.props;
-    const matrixSize = Math.sqrt(squares.length);
+    const matrixSize = Math.sqrt(this.props.squares.length);
     const board = Array(matrixSize).fill(null);
     for (let i = 0; i < matrixSize; i++) {
-      const squrs = Array(matrixSize).fill(null);
+      const squares = Array(matrixSize).fill(null);
       for (let j = 0; j < matrixSize; j++) {
         const squareKey = i * matrixSize + j;
-        squrs.push(<span key={squareKey}>{this.renderSquare(squareKey)}</span>);
+        squares.push(
+          <span key={squareKey}>{this.renderSquare(squareKey)}</span>
+        );
       }
-      board.push(<div key={i}>{squrs}</div>);
+      board.push(<div key={i}>{squares}</div>);
     }
     return board;
   }
