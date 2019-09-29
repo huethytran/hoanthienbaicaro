@@ -9,7 +9,12 @@
         }
       ],
       "react/prop-types": 0,
+      "no-console": 0,
+      "react/button-has-type": 0,
+      "react/prefer-stateless-function": 0,
       "no-underscore-dangle": 0,
+      "no-plusplus": 0,
+      "no-unused-expressions": 0,
       "import/imports-first": ["error", "absolute-first"],
       "import/newline-after-import": "error"
     },

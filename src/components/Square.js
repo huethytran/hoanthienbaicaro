@@ -1,43 +1,52 @@
 import React from 'react';
 
-class Square extends React.Component{
-    render(){
-        if (this.props.value == 'X' && this.props.isChosen == false && this.props.isWin == true)
-        {
-            return(
-                <button className="square x isWin" onClick={this.props.onClick}>{this.props.value}</button>
-            );
-        }
-        else if (this.props.value == 'O' && this.props.isChosen == false && this.props.isWin == true)
-        {
-            return(
-                <button className="square o isWin" onClick={this.props.onClick}>{this.props.value}</button>
-            );
-        }
-        else if (this.props.value == 'X' && this.props.isChosen == true && this.props.isWin == false) 
-        {
-            return(
-                <button className="square x isChosen" onClick={this.props.onClick}>{this.props.value}</button>
-            );
-        }
-        else if (this.props.value == 'X' && this.props.isChosen == false && this.props.isWin == false)
-        {
-            return(
-                <button className="square x" onClick={this.props.onClick}>{this.props.value}</button>
-            );
-        }
-        else if (this.props.value == 'O' && this.props.isChosen == true && this.props.isWin == false)
-        {
-            return(
-                <button className="square o isChosen" onClick={this.props.onClick}>{this.props.value}</button>
-            );
-        }
-        else
-        {
-            return(
-                <button className="square o" onClick={this.props.onClick}>{this.props.value}</button>
-            );
-        }
+class Square extends React.Component {
+  render() {
+    const { onClick } = this.props;
+    const { value } = this.props;
+    const { isChosen } = this.props;
+    const { isWin } = this.props;
+    if (value === 'X' && isChosen === false && isWin === true) {
+      return (
+        <button className="square x isWin" onClick={onClick}>
+          {value}
+        </button>
+      );
+    }
+    if (value === 'O' && isChosen === false && isWin === true) {
+      return (
+        <button className="square o isWin" onClick={onClick}>
+          {value}
+        </button>
+      );
+    }
+    if (value === 'X' && isChosen === true && isWin === false) {
+      return (
+        <button className="square x isChosen" onClick={onClick}>
+          {value}
+        </button>
+      );
+    }
+    if (value === 'X' && isChosen === false && isWin === false) {
+      return (
+        <button className="square x" onClick={onClick}>
+          {value}
+        </button>
+      );
+    }
+    if (value === 'O' && isChosen === true && isWin === false) {
+      return (
+        <button className="square o isChosen" onClick={onClick}>
+          {value}
+        </button>
+      );
+    }
+
+    return (
+      <button className="square o" onClick={onClick}>
+        {value}
+      </button>
+    );
   }
 }
 
