@@ -11,13 +11,15 @@
       "react/prop-types": 0,
       "no-console": 0,
       "react/button-has-type": 0,
-      "react/prefer-stateless-function": 0,
-      "react/no-direct-mutation-state": 0,
-      "react/destructuring-assignment": 0,
       "no-underscore-dangle": 0,
       "no-plusplus": 0,
       "no-unused-expressions": 0,
+      "react/static-property-placement" : 0,
+      "react/forbid-prop-types": 0,
+      "react/require-default-props": 0,
+      "react/prefer-stateless-function": 0,
       "import/imports-first": ["error", "absolute-first"],
+      "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
       "import/newline-after-import": "error"
     },
     "globals": {
