@@ -1,21 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import rootReducer from './reducers/index';
+import Root from './components/Root';
 import './index.css';
-import Game from './containers/Game';
 
 const redux = require('redux');
 
+const composeEnhancer =
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || redux.compose;
 const store = redux.createStore(
   rootReducer,
-  redux.compose(window.devToolsExtension ? window.devToolsExtension() : f => f)
+  composeEnhancer(redux.applyMiddleware(thunk))
 );
 store.subscribe(() => console.log(store.getState()));
 
-ReactDOM.render(
-  <Provider store={store}>
-    <Game />
-  </Provider>,
-  document.getElementById('root')
-);
+ReactDOM.render(<Root store={store} />, document.getElementById('root'));

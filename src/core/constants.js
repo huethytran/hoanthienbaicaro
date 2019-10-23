@@ -6,7 +6,14 @@ export const types = {
   ADD_HISTORY: 'ADD_HISTORY',
   REPLAY: 'REPLAY',
   SWITCH_SORT: 'SWITCH_SORT',
-  SET_WINNER: 'SET_WINNER'
+  SET_WINNER: 'SET_WINNER',
+  LOGIN: 'LOGIN',
+  LOGIN_REQUEST: 'LOGIN_REQUEST',
+  LOGIN_ERR: 'LOGIN_ERR',
+  REGISTER: 'REGISTER',
+  REGISTER_REQUEST: 'REGISTER_REQUEST',
+  LOGOUT: 'LOGOUT',
+  CALLBACKLINK: 'CALLBACKLINK'
 };
 
 export const numberCell = 20;
@@ -20,3 +27,5 @@ export const sort = {
   Asc: true,
   Desc: false
 };
+
+export const api_url = 'http://localhost:4000';

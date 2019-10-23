@@ -1,29 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import Square from './Square';
 import { numberCell } from '../core/constants';
 
 class Board extends React.Component {
-  static propTypes = {
-    winner: PropTypes.objectOf(
-      PropTypes.shape({
-        kq: PropTypes.string.isRequired,
-        type: PropTypes.number.isRequired,
-        vt: PropTypes.number.isRequired
-      }).isRequired
-    ).isRequired,
-    backStep: PropTypes.number.isRequired,
-    preStep: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        player: PropTypes.string.isRequired,
-        step: PropTypes.number.isRequired
-      }).isRequired
-    ).isRequired,
-    squares: PropTypes.array.isRequired,
-    onClick: PropTypes.func.isRequired
-  };
-
   renderSquare(i) {
     const { winner, preStep, squares, history, backStep, onClick } = this.props;
 

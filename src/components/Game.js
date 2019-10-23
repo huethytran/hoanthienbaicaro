@@ -1,32 +1,11 @@
 import 'antd/dist/antd.css';
 import { Button } from 'antd';
 import React from 'react';
-import PropTypes from 'prop-types';
 import Board from './Board';
 import History from './History';
+import User from '../containers/User';
 
 class Game extends React.Component {
-  static propTypes = {
-    backStep: PropTypes.number.isRequired,
-    preStep: PropTypes.number.isRequired,
-    history: PropTypes.arrayOf(
-      PropTypes.shape({
-        player: PropTypes.string,
-        step: PropTypes.number
-      })
-    ),
-    winner: PropTypes.shape({
-      kq: PropTypes.string,
-      type: PropTypes.number,
-      vt: PropTypes.number
-    }),
-    squares: PropTypes.array.isRequired,
-    sortHistory: PropTypes.bool.isRequired,
-    handleHistoryClick: PropTypes.func.isRequired,
-    handleClick: PropTypes.func.isRequired,
-    handleSortButtonClick: PropTypes.func.isRequired
-  };
-
   render() {
     const {
       squares,
@@ -61,7 +40,9 @@ class Game extends React.Component {
             onClick={i => handleClick(i, winner.kq)}
           />
         </div>
+
         <div className="divhistory">
+          <User />
           <div className="divhistory1">
             <p>&nbsp;&nbsp;History</p>
             <Button

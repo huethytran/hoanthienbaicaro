@@ -125,5 +125,4 @@ const mapStateToProps = state => ({
   sortHistory: state.history.sortHistory,
   winner: state.game.winner
 });
-
 export default connect(mapStateToProps)(Game);
