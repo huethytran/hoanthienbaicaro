@@ -176,7 +176,7 @@ class Register extends React.Component {
                 extra="We must make sure that your are a human."
               >
                 <ReCAPTCHA
-                  sitekey="6LcU2L4UAAAAAIxHuVU88xc5gc7aPrwgXCjHP7yn"
+                  sitekey="6LfTGb8UAAAAAILweMXMF6yf4GmBzeP9j-omzJh5"
                   callback={callback}
                   expiredCallback={expiredCallback}
                   locale="en"
