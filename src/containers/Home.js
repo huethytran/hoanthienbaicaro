@@ -16,6 +16,9 @@ const mapDispatchToProps = dispatch => {
     },
     callbackLink: cbl => {
       dispatch(actions.callbackLink(cbl));
+    },
+    switchIsSearching: data => {
+      dispatch(actions.switchIsSearching(data));
     }
   };
 };

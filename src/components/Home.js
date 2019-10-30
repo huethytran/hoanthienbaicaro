@@ -4,7 +4,13 @@ import { Button } from 'antd';
 
 class Home extends React.Component {
   render() {
-    const { username, logout, getUser, callbackLink } = this.props;
+    const {
+      username,
+      logout,
+      getUser,
+      callbackLink,
+      switchIsSearching
+    } = this.props;
     getUser();
     if (username == null)
       return (
@@ -53,8 +59,12 @@ class Home extends React.Component {
           <br />
           <div className="btn">
             <Link to="/game">
-              {' '}
-              <Button type="default" size="large" style={{ width: '100%' }}>
+              <Button
+                type="default"
+                size="large"
+                style={{ width: '100%' }}
+                onClick={switchIsSearching(true)}
+              >
                 Play Online
               </Button>
             </Link>
