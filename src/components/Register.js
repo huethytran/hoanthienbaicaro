@@ -1,5 +1,6 @@
 import React from 'react';
 import ReCAPTCHA from 'react-grecaptcha';
+import { withRouter } from 'react-router-dom';
 import { Form, Input, Button, Modal } from 'antd';
 import * as callApi from '../utils/apiCaller';
 import bg01 from '../image/bg01.jpg';
@@ -28,7 +29,6 @@ class Register extends React.Component {
         .callApiRegister(user)
         .then(() => {
           this.success();
-          this.props.history.push('/login');
         })
         .catch(err => {
           document.getElementById('msg').innerHTML = err.response.data.error;
@@ -71,10 +71,18 @@ class Register extends React.Component {
     this.setState({ autoCompleteResult });
   };
 
+  changeDirect() {
+    console.log(this.props);
+    this.props.history.push('/login');
+  }
+
   success() {
     Modal.success({
       title: 'Create Account Success',
-      content: 'Press OK to login'
+      content: 'Press OK to login',
+      onOk: () => {
+        this.changeDirect();
+      }
     });
   }
 
@@ -197,4 +205,4 @@ class Register extends React.Component {
 const RegisterForm = Form.create({})(Register);
 
 export { RegisterForm };
-export default RegisterForm;
+export default withRouter(RegisterForm);

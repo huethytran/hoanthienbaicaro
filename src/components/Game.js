@@ -1,9 +1,11 @@
 import 'antd/dist/antd.css';
 import { Button } from 'antd';
 import React from 'react';
+
 import Board from './Board';
 import History from './History';
 import User from '../containers/User';
+import Chat from '../containers/Chat';
 
 class Game extends React.Component {
   render() {
@@ -11,24 +13,48 @@ class Game extends React.Component {
       squares,
       winner,
       status,
-      replay,
       preStep,
       history,
       backStep,
       handleSortButtonClick,
       handleClick,
       handleHistoryClick,
-      sortHistory
+      sortHistory,
+      requestReplay,
+      requestUndo,
+      sendMessage,
+      competitor,
+      onLogout
     } = this.props;
-    console.log(winner.vt);
+
     return (
       <div className="app">
         <div className="game-info">
           <p className="title">Caro VN</p>
+          <div className="competitor">
+            Competitor: &nbsp; <div className="username">{competitor}</div>
+          </div>
           <p>{status}</p>
-          <Button type="dashed" size="large" shape="round" onClick={replay}>
+          <Button
+            type="dashed"
+            size="default"
+            shape="round"
+            onClick={requestReplay}
+            style={{ width: '100px' }}
+          >
             Play Again
           </Button>
+          &nbsp; &nbsp; &nbsp;
+          <Button
+            type="dashed"
+            size="default"
+            shape="round"
+            onClick={requestUndo}
+            style={{ width: '100px' }}
+          >
+            Undo
+          </Button>
+          <Chat sendMessage={message => sendMessage(message)} />
         </div>
         <div className="game">
           <Board
@@ -42,7 +68,7 @@ class Game extends React.Component {
         </div>
 
         <div className="divhistory">
-          <User />
+          <User onLogout={onLogout} />
           <div className="divhistory1">
             <p>&nbsp;&nbsp;History</p>
             <Button

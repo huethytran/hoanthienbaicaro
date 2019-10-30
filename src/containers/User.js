@@ -5,10 +5,10 @@ import * as actions from '../actions/index';
 
 class User extends React.Component {
   render() {
-    const { logout, getUser, callbackLink, username } = this.props;
+    const { onLogout, getUser, callbackLink, username } = this.props;
     return (
       <UserComponent
-        logout={logout}
+        onLogout={onLogout}
         getUser={getUser}
         callbackLink={callbackLink}
         username={username}
@@ -23,9 +23,6 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => {
   return {
-    logout: () => {
-      dispatch(actions.logOut());
-    },
     getUser: () => {
       dispatch(actions.getUser());
     },

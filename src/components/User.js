@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 
 class User extends React.Component {
   render() {
-    const { logout, getUser, username, callbackLink } = this.props;
+    const { getUser, username, callbackLink, onLogout } = this.props;
+    console.log('prop của user compo', this.props);
     getUser();
-    console.log(this.props);
     if (username)
       return (
         <div className="divuser">
           <p>Hi, {username}!</p>
-          <Button type="danger" size="small" onClick={logout}>
+          <Button type="danger" size="small" onClick={onLogout}>
             Logout
           </Button>
         </div>

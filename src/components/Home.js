@@ -15,13 +15,6 @@ class Home extends React.Component {
           <div style={{ display: 'block' }}>
             <p className="hometitle">Caro VN</p>
             <div className="btn">
-              <Link to="/game">
-                <Button type="default" size="large" style={{ width: '100%' }}>
-                  Play Game
-                </Button>
-              </Link>
-              <br />
-              <br />
               <Link to="/login">
                 <Button
                   type="default"
@@ -48,6 +41,7 @@ class Home extends React.Component {
           </div>
         </div>
       );
+
     return (
       <div
         className="container-login100"
@@ -59,8 +53,9 @@ class Home extends React.Component {
           <br />
           <div className="btn">
             <Link to="/game">
+              {' '}
               <Button type="default" size="large" style={{ width: '100%' }}>
-                Play Game
+                Play Online
               </Button>
             </Link>
             <br />
