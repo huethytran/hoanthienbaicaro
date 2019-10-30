@@ -1,0 +1,47 @@
+{
+    "extends": ["airbnb", "prettier", "prettier/react"],
+    "plugins": ["prettier"],
+    "rules": {
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [".js", ".jsx"]
+        }
+      ],
+      "react/prop-types": 0,
+      "no-console": 0,
+      "react/button-has-type": 0,
+      "no-underscore-dangle": 0,
+      "no-plusplus": 0,
+      "react/jsx-no-bind": 0,
+      "no-unused-expressions": 0,
+      "react/static-property-placement" : 0,
+      "react/forbid-prop-types": 0,
+      "react/require-default-props": 0,
+      "react/prefer-stateless-function": 0,
+      "camelcase": 0,
+      "no-param-reassign": 0,
+      "consistent-return": 0,
+      "react/destructuring-assignment": 0,
+      "no-shadow": 0,
+      "react/no-access-state-in-setstate": 0,
+      "class-methods-use-this": 0,
+      "react/jsx-props-no-spreading": 0,
+      "jsx-a11y/anchor-is-valid": 0,
+      "react/no-unused-state": 0,
+      "func-names": 0,
+      "import/imports-first": ["error", "absolute-first"],
+      "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+      "import/newline-after-import": "error"
+    },
+    "globals": {
+      "window": true,
+      "document": true,
+      "localStorage": true,
+      "FormData": true,
+      "FileReader": true,
+      "Blob": true,
+      "navigator": true
+    },
+    "parser": "babel-eslint"
+  }
