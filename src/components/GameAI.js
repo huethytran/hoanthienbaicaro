@@ -1,24 +1,12 @@
 import 'antd/dist/antd.css';
-import { Button } from 'antd';
+import { Button, Radio } from 'antd';
 import React from 'react';
 
 import Board from './Board';
 import History from './History';
 import User from '../containers/User';
-import Chat from '../containers/Chat';
 
-class Game extends React.Component {
-  sendRequest1 = () => {
-    console.log('abcde');
-    const { sendRequest } = this.props;
-    sendRequest(1);
-  };
-
-  sendRequest2 = () => {
-    const { sendRequest } = this.props;
-    sendRequest(2);
-  };
-
+class GameAI extends React.Component {
   render() {
     const {
       squares,
@@ -31,59 +19,42 @@ class Game extends React.Component {
       handleClick,
       handleHistoryClick,
       sortHistory,
-      requestReplay,
-      requestUndo,
-      sendMessage,
-      competitor,
-      onLogout
+      replay,
+      onLogout,
+      switchLevel
     } = this.props;
+    const radioStyle = {
+      display: 'block',
+      height: '30px',
+      lineHeight: '30px',
+      color: 'white',
+      fontSize: '20px'
+    };
     return (
       <div className="app">
         <div className="game-info">
           <p className="title">Caro VN</p>
-          <div className="competitor">
-            Competitor: &nbsp; <div className="username">{competitor}</div>
-          </div>
           <p>{status}</p>
-          <Button
-            type="dashed"
-            size="default"
-            shape="round"
-            onClick={requestReplay}
-            style={{ width: '100px' }}
-          >
+          <Button type="dashed" size="large" shape="round" onClick={replay}>
             Play Again
           </Button>
-          &nbsp; &nbsp; &nbsp;
-          <Button
-            type="dashed"
+          <br />
+          <br />
+          <p>Choose level:</p>
+          <Radio.Group
+            defaultValue={1}
             size="default"
-            shape="round"
-            onClick={requestUndo}
-            style={{ width: '100px' }}
+            buttonStyle="solid"
+            onChange={switchLevel}
           >
-            Undo
-          </Button>
-          <br />
-          <br />
-          <Button
-            type="danger"
-            size="small"
-            onClick={this.sendRequest1}
-            style={{ width: '100px' }}
-          >
-            Surrender
-          </Button>
-          &nbsp; &nbsp; &nbsp;
-          <Button
-            type="primary"
-            size="small"
-            onClick={this.sendRequest2}
-            style={{ width: '100px' }}
-          >
-            Draw
-          </Button>
-          <Chat sendMessage={message => sendMessage(message)} />
+            <Radio style={radioStyle} value={1}>
+              Easy Level
+            </Radio>
+            <br />
+            <Radio style={radioStyle} value={2}>
+              Hard Level
+            </Radio>
+          </Radio.Group>
         </div>
         <div className="game">
           <Board
@@ -95,7 +66,6 @@ class Game extends React.Component {
             onClick={i => handleClick(i, winner.kq)}
           />
         </div>
-
         <div className="divhistory">
           <User onLogout={onLogout} />
           <div className="divhistory1">
@@ -122,4 +92,4 @@ class Game extends React.Component {
     );
   }
 }
-export default Game;
+export default GameAI;

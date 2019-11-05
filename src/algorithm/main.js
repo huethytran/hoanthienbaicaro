@@ -15,6 +15,7 @@ export const isBlocked = (squares, preStep, block1, block2) => {
 
 export const calculateWinner = (squares, preStep) => {
   // xet hang ngang
+  console.log('caculate');
   for (let i = -4; i <= 0; i++) {
     if (preStep + i - parseInt(preStep / 20, 10) * 20 >= 0) {
       if (

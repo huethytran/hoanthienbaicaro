@@ -12,6 +12,8 @@ import Game from '../containers/Game';
 import Home from '../containers/Home';
 import Login from '../containers/Login';
 import Register from './Register';
+import ProfilePage from '../containers/ProfilePage';
+import GameAI from '../containers/GameAI';
 
 const Root = ({ store }) => (
   <Provider store={store}>
@@ -22,6 +24,8 @@ const Root = ({ store }) => (
           <Route path="/game" component={Game} />
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />
+          <Route path="/profile" component={ProfilePage} />
+          <Route path="/gameai" component={GameAI} />
         </Switch>
       </Router>
     </HashRouter>

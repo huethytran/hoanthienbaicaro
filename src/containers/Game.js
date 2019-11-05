@@ -8,12 +8,11 @@ import { players, sort } from '../core/constants';
 import { calculateWinner } from '../algorithm/main';
 
 class Game extends React.Component {
-  socket = io('https://btcn06-1612685.herokuapp.com/')
+  socket = io('http://localhost:4000')
     .on('Already-found-player', (data, playFirst) => {
       this.alreadyFoundPlayer(data, playFirst);
     })
     .on('Competitor-had-ticked', data => {
-      console.log('bên kia tock rồi', data);
       this.competitorHadTicked(data);
     })
 
@@ -45,12 +44,102 @@ class Game extends React.Component {
     })
     .on('Competitor-send-message', data => {
       this.addCompetitorMessage(data);
+    })
+    .on('Competitor-request', type => {
+      console.log('heloooooo', type);
+      if (type === 1) this.surrenderModal();
+      else this.drawModal();
+    })
+    .on('Competitor-accept-request', type => {
+      this.requestSuccess(type);
+    })
+    .on('Competitor-reject-request', () => {
+      this.requestFailed();
     });
 
   sendUsernameFailed = () => {
     const { switchIsSearching } = this.props;
     switchIsSearching(true);
     this.searchCompetitor();
+  };
+
+  requestSuccess = type => {
+    const { competitor, setRequest, setWinner } = this.props;
+    setRequest(false);
+    let winner = {};
+    if (type === 1) winner = { kq: competitor, type: 0, vt: 0 };
+    else winner = { kq: 'undefined', type: 0, vt: 0 };
+    setWinner(winner);
+    Modal.success({
+      content: `Player ${competitor} accepts your request.`
+    });
+  };
+
+  requestFailed = () => {
+    const { competitor, setRequest } = this.props;
+    setRequest(false);
+    Modal.error({
+      content: `Player ${competitor} rejects your request.`
+    });
+  };
+
+  acceptRequest = type => {
+    const { setWinner, username } = this.props;
+    let winner = {};
+    if (type === 1) winner = { kq: username, type: 0, vt: 0 };
+    else winner = { kq: 'undefined', type: 0, vt: 0 };
+    setWinner(winner);
+  };
+
+  surrenderModal = () => {
+    const { competitor } = this.props;
+    const { confirm } = Modal;
+    confirm({
+      title: 'Ask For Surrender',
+      content: `Player ${competitor} wants to surrender. Do you agree?`,
+      okText: 'Agree',
+      cancelText: 'Disagree',
+      onOk: () => {
+        this.acceptRequest(1);
+        this.socket.emit('Client-send-accept-request', 1);
+        return new Promise((resolve, reject) => {
+          setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+        }).catch(() => console.log('Oops errors!'));
+      },
+      onCancel: () => {
+        this.socket.emit('Client-send-reject-request', 1);
+      }
+    });
+  };
+
+  drawModal = () => {
+    const { competitor } = this.props;
+    const { confirm } = Modal;
+    confirm({
+      title: 'Ask For Draw',
+      content: `Player ${competitor} wants to draw. Do you agree?`,
+      okText: 'Agree',
+      cancelText: 'Disagree',
+      onOk: () => {
+        this.acceptRequest(2);
+        this.socket.emit('Client-send-accept-request', 2);
+        return new Promise((resolve, reject) => {
+          setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+        }).catch(() => console.log('Oops errors!'));
+      },
+      onCancel: () => {
+        this.socket.emit('Client-send-reject-request', 2);
+      }
+    });
+  };
+
+  request = type => {
+    console.log('requyest', type);
+    const { setRequest, isRequest } = this.props;
+    if (isRequest === false) {
+      this.socket.emit('Client-send-request', type);
+      setRequest(true);
+    }
   };
 
   onLogout = () => {
@@ -196,6 +285,14 @@ class Game extends React.Component {
     const { sortHistory, switchSort } = this.props;
     if (sortHistory === sort.Asc) switchSort(sort.Desc);
     else switchSort(sort.Asc);
+  };
+
+  componentDidUpdate = () => {
+    const { username, callbackLink } = this.props;
+    if (username === null) {
+      callbackLink('/login');
+      window.location.assign('/login');
+    }
   };
 
   AcceptUndo = () => {
@@ -457,6 +554,7 @@ class Game extends React.Component {
         isRequestUndo={isRequestUndo}
         sendMessage={message => this.sendMessage(message)}
         onLogout={this.onLogout}
+        sendRequest={type => this.request(type)}
       />
     );
   }
@@ -475,7 +573,8 @@ const mapStateToProps = state => ({
   isRequestUndo: state.game.isRequestUndo,
   isRequestReplay: state.game.isRequestReplay,
   currentPlayerOnline: state.game.currentPlayerOnline,
-  isSearching: state.game.isSearching
+  isSearching: state.game.isSearching,
+  isRequest: state.game.isRequest
 });
 const mapDispatchToProps = dispatch => {
   return {
@@ -529,6 +628,12 @@ const mapDispatchToProps = dispatch => {
     },
     logout: () => {
       dispatch(actions.logOut());
+    },
+    setRequest: data => {
+      dispatch(actions.setRequest(data));
+    },
+    callbackLink: cbl => {
+      dispatch(actions.callbackLink(cbl));
     }
   };
 };

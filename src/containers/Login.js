@@ -5,7 +5,7 @@ import * as actions from '../actions/index';
 const mapStateToProps = state => ({
   username: state.user.username,
   usertoken: state.user.usertoken,
-  err: state.user.err,
+  loginErr: state.user.loginErr,
   callbackLink: state.CallbackLink.callbackLink
 });
 const mapDispatchToProps = dispatch => {
@@ -15,6 +15,12 @@ const mapDispatchToProps = dispatch => {
     },
     getUser: () => {
       dispatch(actions.getUser());
+    },
+    loginfb: data => {
+      dispatch(actions.loginFbRequest(data));
+    },
+    logingg: data => {
+      dispatch(actions.loginGgRequest(data));
     }
   };
 };

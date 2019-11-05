@@ -227,7 +227,13 @@ ul {
   background: #fff;
   border-radius: 10px;
 }
-
+.logo {
+  width: 120px;
+  height: 31px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px 28px 16px 0;
+  float: left;
+}
 .hometitle {
   color: #61dafb;
   font-size: 50px;
@@ -279,4 +285,55 @@ ul {
 .sc-header--img {
   padding-bottom: 0px !important;
   padding-top: 0px !important;
+}
+.avatar-uploader {
+  margin-left: 30%;
+  margin-top: 12%;
+  width: 100%;
+}
+.ant-upload-select {
+  width: 70% !important;
+}
+img.avatar {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 70%;
+  margin-left: 30%;
+  margin-top: 12%;
+}
+
+img.avatar:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+.btnfb {
+  height: 45px;
+  display: block;
+  background-color: #3b5998;
+  color: white;
+  font-size: 15px;
+  border: #3b5998;
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+}
+.btngg {
+  width: 100%;
+}
+.btngg div {
+  margin-left: 10%;
+}
+.btngg span {
+  width: 100%;
+  text-align: center;
+  font-size: 15px !important;
+}
+.btnfb i {
+  font-size: 30px;
+  float: left;
+  margin-left: 10%;
+}
+.btnfb:hover {
+  background-color: #2f477a;
+  cursor: pointer;
 }

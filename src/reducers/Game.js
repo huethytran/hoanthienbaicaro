@@ -8,6 +8,8 @@ const initialState = {
   isRequestUndo: false,
   isRequestReplay: false,
   isSearching: false,
+  isRequest: false,
+  isEasyLevel: true,
   winner: { kq: null, type: 0, vt: 0 }
 };
 export default function game(state = initialState, action) {
@@ -50,6 +52,18 @@ export default function game(state = initialState, action) {
     }
     case types.SWITCH_IS_SEARCHING: {
       return { ...state, isSearching: action.data };
+    }
+    case types.SET_REQUEST: {
+      return { ...state, isRequest: action.data };
+    }
+    case types.SWITCH_LEVEL: {
+      return {
+        ...state,
+        squares: Array(400).fill(null),
+        preStep: -1,
+        currentPlayer: players.X,
+        isEasyLevel: !state.isEasyLevel
+      };
     }
     default:
       return state;

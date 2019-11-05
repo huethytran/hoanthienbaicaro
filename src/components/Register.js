@@ -31,6 +31,7 @@ class Register extends React.Component {
           this.success();
         })
         .catch(err => {
+          console.log(err);
           document.getElementById('msg').innerHTML = err.response.data.error;
         });
     }

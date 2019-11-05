@@ -4,7 +4,8 @@ import Chat from '../components/Chat';
 
 const mapStateToProps = state => ({
   messages: state.chat.messages,
-  competitor: state.user.competitor
+  competitor: state.user.competitor,
+  imageUrl: state.user.imageUrl
 });
 const mapDispatchToProps = dispatch => {
   return {

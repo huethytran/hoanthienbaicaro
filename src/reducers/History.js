@@ -37,6 +37,14 @@ export default function history(state = initialState, action) {
     case types.SWITCH_SORT: {
       return { ...state, sortHistory: action.data };
     }
+    case types.SWITCH_LEVEL: {
+      return {
+        ...state,
+        history: [{ player: null, step: 0, playerOnline: null }],
+        numOfStep: 0,
+        backStep: 0
+      };
+    }
     default:
       return state;
   }

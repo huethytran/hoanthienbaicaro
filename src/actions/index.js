@@ -1,5 +1,5 @@
 import { types } from '../core/constants';
-import { callApiLogin } from '../utils/apiCaller';
+import * as callApi from '../utils/apiCaller';
 
 export const initBoard = arrBoard => ({
   type: types.INIT_BOARD,
@@ -43,41 +43,89 @@ export const login = user => ({
   type: types.LOGIN,
   user
 });
-export const logout = () => ({
-  type: types.LOGOUT
+export const loginfb = user => ({
+  type: types.LOGIN_FB,
+  user
 });
 export const loginErr = err => ({
   type: types.LOGIN_ERR,
   err
 });
+export const loginFbRequest = data => {
+  return dispatch => {
+    return callApi
+      .callApiLoginFb(data)
+      .then(res => {
+        localStorage.setItem('usertoken', res.data.token);
+        dispatch(loginfb(res.data));
+      })
+      .catch(err => {
+        dispatch(loginErr(err.response.data));
+      });
+  };
+};
+export const loginGgRequest = data => {
+  return dispatch => {
+    return callApi
+      .callApiLoginGg(data)
+      .then(res => {
+        localStorage.setItem('usertoken', res.data.token);
+        dispatch(loginfb(res.data));
+      })
+      .catch(err => {
+        dispatch(loginErr(err.response.data));
+      });
+  };
+};
+export const logout = () => ({
+  type: types.LOGOUT
+});
 
 export const loginRequest = user => {
   return dispatch => {
-    return callApiLogin(user)
+    return callApi
+      .callApiLogin(user)
       .then(res => {
-        localStorage.setItem('username', res.data.username);
         localStorage.setItem('usertoken', res.data.token);
         dispatch(login(res.data));
       })
       .catch(err => {
-        dispatch(loginErr(err.response.status));
+        dispatch(loginErr(err.response.data));
       });
   };
 };
 
 export const getUser = () => {
   return dispatch => {
-    dispatch(
-      login({
-        username: localStorage.getItem('username'),
-        usertoken: localStorage.getItem('usertoken')
+    return callApi
+      .callApiGetInfo()
+      .then(res => {
+        dispatch(
+          login({
+            username: res.data.username,
+            usertoken: localStorage.getItem('usertoken'),
+            email: res.data.email,
+            numOfWordInPassword: res.data.numOfWordInPassword,
+            imageUrl: res.data.imageUrl
+          })
+        );
       })
-    );
+      .catch(err => {
+        console.log(err);
+        dispatch(
+          login({
+            username: null,
+            usertoken: null,
+            email: null,
+            numOfWordInPassword: 0
+          })
+        );
+        localStorage.removeItem('usertoken');
+      });
   };
 };
 export const logOut = () => {
   return dispatch => {
-    localStorage.removeItem('username');
     localStorage.removeItem('usertoken');
     dispatch(logout());
   };
@@ -127,4 +175,78 @@ export const addMessage = message => ({
 });
 export const removeChat = () => ({
   type: types.REMOVE_CHAT
+});
+export const changePassword = numOfWordInPassword => ({
+  type: types.CHANGE_PASSWORD,
+  numOfWordInPassword
+});
+export const changePasswordErr = err => ({
+  type: types.CHANGE_PASSWORD_ERR,
+  err
+});
+export const switchIsChangePassword = data => ({
+  type: types.SWITCH_IS_CHANGE_PASSWORD,
+  data
+});
+export const beforeChangePassword = data => {
+  return dispatch => {
+    return callApi
+      .callApiChangePassword(data)
+      .then(() => {
+        dispatch(getUser());
+        dispatch(switchIsChangePassword());
+      })
+      .catch(err => {
+        console.log(err.response);
+        if (err.response.status === 401) window.location.assign('/login');
+        else dispatch(changePasswordErr(err.response.data));
+      });
+  };
+};
+export const updateInfoErr = err => ({
+  type: types.UPDATE_INFO_ERR,
+  err
+});
+export const updateInfo = data => ({
+  type: types.UPDATE_INFO,
+  data
+});
+export const beforeUpdateInfo = data => {
+  return dispatch => {
+    return callApi
+      .callApiUpdateInfo(data)
+      .then(res => {
+        dispatch(updateInfo(res.data));
+      })
+      .catch(err => {
+        if (err.response.status === 401) window.location.assign('/login');
+        else dispatch(updateInfoErr(err.response.data));
+      });
+  };
+};
+export const switchLoading = () => ({
+  type: types.SWITCH_LOADING
+});
+export const setImageUrl = data => ({
+  type: types.SET_IMAGE_URL,
+  data
+});
+export const beforeSetImageUrl = imageUrl => {
+  return dispatch => {
+    return callApi
+      .callApiUploadAvatar(imageUrl)
+      .then(res => {
+        dispatch(setImageUrl(res.data));
+      })
+      .catch(err => {
+        if (err.response.status === 401) window.location.assign('/login');
+      });
+  };
+};
+export const setRequest = data => ({
+  type: types.SET_REQUEST,
+  data
+});
+export const switchLevel = () => ({
+  type: types.SWITCH_LEVEL
 });

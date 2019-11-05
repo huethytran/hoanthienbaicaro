@@ -1,7 +1,10 @@
 import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
+import FacebookLogin from 'react-facebook-login';
+import { GoogleLogin } from 'react-google-login';
 import { Form, Icon, Input, Button, Checkbox } from 'antd';
 import bg01 from '../image/bg01.jpg';
+import { id } from '../core/constants';
 
 class Login extends React.Component {
   loginRequest = e => {
@@ -13,16 +16,34 @@ class Login extends React.Component {
     });
   };
 
+  onFailure = error => {
+    console.log(error);
+  };
+
+  googleResponse = response => {
+    const { logingg } = this.props;
+    if (response) {
+      logingg({
+        access_token: response.accessToken
+      });
+    }
+  };
+
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { username, err, getUser, callbackLink } = this.props;
+    const { username, loginErr, getUser, callbackLink, loginfb } = this.props;
     getUser();
+    const responseFacebook = response => {
+      if (response) {
+        loginfb({
+          access_token: response.accessToken
+        });
+      }
+    };
     if (username) {
       if (callbackLink) return <Redirect to={callbackLink} />;
       return <Redirect to="/" />;
     }
-    if (err)
-      document.getElementById('msg').innerHTML = 'Invalid username or password';
     return (
       <div
         className="container-login100"
@@ -31,7 +52,7 @@ class Login extends React.Component {
         <div className="wrap-login100">
           <h1 className="login100-form-title">LOGIN</h1>
           <Form onSubmit={this.loginRequest} className="login100-form">
-            <p style={{ color: '#fff' }} id="msg" />
+            <p style={{ color: '#fff' }}>{loginErr}</p>
             <Form.Item>
               {getFieldDecorator('username', {
                 rules: [
@@ -81,6 +102,21 @@ class Login extends React.Component {
               Or <Link to="/register">register now!</Link>
             </Form.Item>
           </Form>
+          <FacebookLogin
+            appId={id.FACEBOOK_APP_ID}
+            autoLoad={false}
+            fields="name,email,picture"
+            cssClass="btnfb"
+            icon="fa-facebook-square"
+            callback={responseFacebook}
+          />
+          <GoogleLogin
+            clientId={id.GOOGLE_CLIENT_ID}
+            buttonText="Login with Google"
+            className="btngg"
+            onSuccess={this.googleResponse}
+            onFailure={this.onFailure}
+          />
         </div>
       </div>
     );
