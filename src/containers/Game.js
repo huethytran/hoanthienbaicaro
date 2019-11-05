@@ -8,7 +8,7 @@ import { players, sort } from '../core/constants';
 import { calculateWinner } from '../algorithm/main';
 
 class Game extends React.Component {
-  socket = io('http://localhost:4000')
+  socket = io('http://btcn06-1612685.herokuapp.com')
     .on('Already-found-player', (data, playFirst) => {
       this.alreadyFoundPlayer(data, playFirst);
     })
