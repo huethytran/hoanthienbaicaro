@@ -54,7 +54,7 @@ export const sort = {
   Desc: false
 };
 
-export const api_url = 'http://localhost:4000';
+export const api_url = 'http://btcn06-1612685.herokuapp.com';
 
 export const id = {
   GOOGLE_CLIENT_ID:
