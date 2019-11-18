@@ -38,7 +38,8 @@ export default function game(state = initialState, action) {
         isSearching: false,
         squares: Array(400).fill(null),
         preStep: -1,
-        currentPlayer: players.X
+        currentPlayer: players.X,
+        winner: { kq: null, type: 0, vt: 0 }
       };
     }
     case types.SET_WINNER: {
